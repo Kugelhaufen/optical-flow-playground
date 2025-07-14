@@ -1,3 +1,5 @@
+import { gaussianBlurCanvas } from './gaussianBlur.js';
+
 class SceneGenerator {
   constructor(sceneName = 'bouncingBall', sceneCanvas) {
     this.setScene(sceneName);
@@ -12,25 +14,36 @@ class SceneGenerator {
 
   renderFrame(ctx, frameCounter, blur = 4) {
     ctx.clearRect(0, 0, this.width, this.height);
-    if (this.sceneName === 'bouncingBall') {
-      this.renderBouncingBall(ctx, frameCounter, blur);
-    } else if (this.sceneName === 'slidingSquare') {
-      this.renderSlidingSquare(ctx, frameCounter, blur);
-    } else if (this.sceneName === 'rotatingBox') {
-      this.renderRotatingBox(ctx, frameCounter, blur);
-    } else if (this.sceneName === 'multipleBlobs') {
-      this.renderMultipleBlobs(ctx, frameCounter, blur);
-    } else if (this.sceneName === 'bouncingDot') {
-      this.renderBouncingDot(ctx, frameCounter, blur);
-    } else if (this.sceneName === 'movingCheckerboard') {
-      this.renderMovingCheckerboard(ctx, frameCounter, blur);
+
+    switch (this.sceneName) {
+      case 'bouncingBall':
+        this.renderBouncingBall(ctx, frameCounter);
+        break;
+      case 'slidingSquare':
+        this.renderSlidingSquare(ctx, frameCounter);
+        break;
+      case 'rotatingBox':
+        this.renderRotatingBox(ctx, frameCounter);
+        break;
+      case 'multipleBlobs':
+        this.renderMultipleBlobs(ctx, frameCounter);
+        break;
+      case 'bouncingDot':
+        this.renderBouncingDot(ctx, frameCounter);
+        break;
+      case 'movingCheckerboard':
+        this.renderMovingCheckerboard(ctx, frameCounter);
+        break;
+      default:
+        console.log('Scene not found');
     }
-    else {
-      console.log('Scene not found');
+
+    if (blur > 0) {
+      gaussianBlurCanvas(ctx, this.width, this.height, blur);
     }
   }
 
-  renderBouncingBall(ctx, frameIndex, blur = 4) {
+  renderBouncingBall(ctx, frameIndex) {
     const durationFrames = 150;
     const loopTime = (frameIndex % durationFrames) / durationFrames;
     const radius = 20;
@@ -39,7 +52,6 @@ class SceneGenerator {
     let posX  = radius + maxX  * (loopTime < 0.5 ? loopTime * 2 : (1 - loopTime) * 2);
     let posY  = radius + maxY  * (loopTime < 0.5 ? loopTime * 2 : (1 - loopTime) * 2);
     ctx.save();
-    ctx.filter = `blur(${blur}px)`;
     ctx.beginPath();
     ctx.arc(posX, posY, radius, 0, 2 * Math.PI);
     ctx.fillStyle = '#fff';
@@ -47,7 +59,7 @@ class SceneGenerator {
     ctx.restore();
   }
 
-  renderSlidingSquare(ctx, frameIndex, blur = 4) {
+  renderSlidingSquare(ctx, frameIndex) {
     const durationFrames = 150;
     const loopTime = (frameIndex % durationFrames) / durationFrames;
     const size = 32;
@@ -57,14 +69,13 @@ class SceneGenerator {
     const x = minX + (maxX - minX) * t;
     const y = (this.height - size) / 2;
     ctx.save();
-    ctx.filter = `blur(${blur}px)`;
     ctx.fillStyle = '#fff';
     ctx.globalAlpha = 0.95;
     ctx.fillRect(x, y, size, size);
     ctx.restore();
   }
 
-  renderRotatingBox(ctx, frameCounter, blur = 4) {
+  renderRotatingBox(ctx, frameCounter) {
     const durationFrames = 150;
     const loopTime = (frameCounter % durationFrames) / durationFrames;
     const size = 48;
@@ -74,14 +85,13 @@ class SceneGenerator {
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(angle);
-    ctx.filter = `blur(${blur}px)`;
     ctx.fillStyle = '#fff';
     ctx.globalAlpha = 0.95;
     ctx.fillRect(-size/2, -size/2, size, size);
     ctx.restore();
   }
 
-  renderMultipleBlobs(ctx, frameCounter, blur = 4) {
+  renderMultipleBlobs(ctx, frameCounter) {
     const durationFrames = 150;
     const loopT = (frameCounter % durationFrames) / durationFrames; // 0..1
     const blobs = [
@@ -105,7 +115,6 @@ class SceneGenerator {
       }
     ];
     ctx.save();
-    ctx.filter = `blur(${blur}px)`;
     for (const blob of blobs) {
       ctx.beginPath();
       ctx.arc(blob.cx, blob.cy, blob.r, 0, 2 * Math.PI);
@@ -116,7 +125,7 @@ class SceneGenerator {
     ctx.restore();
   }
   
-  renderBouncingDot(ctx, frameCounter, blur = 4) {
+  renderBouncingDot(ctx, frameCounter) {
     const durationFrames = 150;
     const loopTime = (frameCounter % durationFrames) / durationFrames;
     const radius = 1;
@@ -125,7 +134,6 @@ class SceneGenerator {
     let posX  = radius + maxX  * (loopTime < 0.5 ? loopTime * 2 : (1 - loopTime) * 2);
     let posY  = radius + maxY  * (loopTime < 0.5 ? loopTime * 2 : (1 - loopTime) * 2);
     ctx.save();
-    ctx.filter = `blur(${blur}px)`;
     ctx.beginPath();
     ctx.arc(posX, posY, radius, 0, 2 * Math.PI);
     ctx.fillStyle = '#fff';
@@ -133,7 +141,7 @@ class SceneGenerator {
     ctx.restore();
   }
 
-  renderMovingCheckerboard(ctx, frameIndex, blur = 0) {
+  renderMovingCheckerboard(ctx, frameIndex) {
     const durationFrames = 150;
     const loopTime = (frameIndex % durationFrames) / durationFrames;
     const t = loopTime < 0.5 ? loopTime * 2 : (1 - loopTime) * 2;
@@ -146,7 +154,6 @@ class SceneGenerator {
   
     ctx.save();
     ctx.translate(offset, offset); // Move diagonally
-    ctx.filter = `blur(${blur}px)`;
   
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {

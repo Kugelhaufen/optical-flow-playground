@@ -87,8 +87,7 @@ class OpticalFlowEngine {
           vAvg[i] = (v[i - 1] + v[i + 1] + v[i - width] + v[i + width]) / 4;
         }
       }
-      // Horn-Schunck Energy function: E(u,v) = sum(Ix*u + Iy*v + It)^2 + alpha^2 * (sum(u^2 + v^2))
-      // Make partial derivatives of the energy function with respect to u and v
+      // Horn-Schunck Energy function -> Make partial derivatives of the energy function with respect to u and v
       // Solve for u and v
       // Apply resulting equations to update u and v
       for (let y = 1; y < height - 1; ++y) {
