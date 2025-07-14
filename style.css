@@ -1,0 +1,194 @@
+body {
+  background: #222;
+  color: #eee;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+#controls-container {
+  margin-bottom: 16px;
+  padding: 12px 24px;
+  background: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  min-width: 300px;
+}
+
+#canvas-container {
+  position: relative;
+  width: 384px;
+  height: 384px;
+  margin-bottom: 32px;
+}
+
+#scene-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 384px;
+  height: 384px;
+  image-rendering: pixelated;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  z-index: 1;
+}
+
+#flow-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 384px;
+  height: 384px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  z-index: 2;
+  pointer-events: none;
+}
+
+#pause-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 16px;
+}
+#pause-btn:hover {
+  background: #666;
+}
+
+#next-frame-btn {
+  background: #444;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 16px;
+}
+#next-frame-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#next-frame-btn:hover:enabled {
+  background: #666;
+}
+
+#previous-frame-btn {
+    background: #444;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 16px;
+  }
+  #previous-frame-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  #previous-frame-btn:hover:enabled {
+    background: #666;
+  }
+
+#bottom-controls-wrapper {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+
+#scene-controls-box, #algo-controls-box {
+  background: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 16px 24px;
+  min-width: 280px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#scene-controls-box {
+  min-width: 280px;
+  width: 280px;
+}
+#algo-controls-box {
+  min-width: 280px;
+  width: 280px;
+}
+
+#scene-controls-box label,
+#algo-controls-box label {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+#scene-controls-box select,
+#algo-controls-box select {
+  background: #222;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 6px 16px;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+#scene-controls-box input[type="range"],
+#algo-controls-box input[type="range"] {
+  width: 180px;
+  margin-bottom: 8px;
+  accent-color: #2196f3;
+  vertical-align: middle;
+}
+
+.blur-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#blur-value {
+  font-size: 1rem;
+  color: #fff;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#lk-controls, #hs-controls {
+  margin-bottom: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#lk-controls label, #hs-controls label {
+  margin-right: 0;
+  margin-bottom: 2px;
+}
+
+#lk-window-value, #hs-alpha-value, #hs-iter-value {
+  font-size: 1rem;
+  color: #fff;
+  margin-left: 8px;
+} 
